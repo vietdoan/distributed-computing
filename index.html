@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Matrix Multiplication</title>
+  <style>
+    h1 {
+      color: #14b114;
+      text-align: center;
+      margin-top: 20%;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Connected</h1>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+    var socket = io();
+    var cnt = 0;
+    socket.on('calculate', function(A, B, ii, jj) {
+      var x = 0;
+      if (!A || !B) {
+        console.log(cnt);
+        throw new Error("completed!");
+      }
+      for(let i = 0; i < A.length; i++)
+        x += A[i] * B[i];
+      cnt++;
+      socket.emit('send me a new piece', ii, jj, x);
+    });
+  </script>
+</body>
+
+
+</html>
